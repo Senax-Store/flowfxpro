@@ -12,11 +12,6 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Inject license secret
-        env:
-          FFX_SECRET: ${{ secrets.FFX_SECRET }}
-        run: |
-          if ($env:FFX_SECRET) { (Get-Content FlowFxPro.py -Raw).Replace('__SECRET__', $env:FFX_SECRET) | Set-Content FlowFxPro.py -NoNewline -Encoding utf8 }
       - run: pip install pyinstaller pyaudiowpatch pycaw comtypes
       - run: pyinstaller --noconfirm --onefile --noconsole --uac-admin --icon FlowFx.ico --name FlowFxPro --hidden-import pyaudiowpatch --hidden-import pycaw.pycaw --hidden-import comtypes.client FlowFxPro.py
       - name: Get FFmpeg
